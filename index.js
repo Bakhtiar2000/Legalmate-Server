@@ -1,44 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');;
-require('dotenv').config()
-const app=express();
-const port= process.env.PORT || 5000;
+const { PORT } = require("./src/secret");
+const connectMongoDb = require("./src/MongoConfig/connectMongoDb");
+connectMongoDb();
+const app = require("./src/app");
 
-//middleware
-app.use(cors())
-app.use(express.json())
+// Running Server
+try {
+  app.listen(PORT, async () => {
+    console.log(`Server Running - http://localhost:${PORT}`);
+  });
 
-//Mongodb
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wiyjou2.mongodb.net/?retryWrites=true&w=majority`
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-    const attorneysCollection = client.db('legalmateDb').collection('attorneys')
-    const practiceAreasCollection = client.db('legalmateDb').collection('practiceAreas')
-    const usersCollection = client.db('legalmateDb').collection('users')
-    const ourReviewsCollection = client.db('legalmateDb').collection('ourReviewss')
-
-
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } 
-  finally {}
+} catch (error) {
+  console.log(error.message)
 }
-run().catch(console.dir);
-
-
-app.get('/', (req, res)=> {
-    res.send('Justice has been served by Legalmate')
-})
-
-app.listen(port, ()=> {
-    console.log(`Legalmate server is running on port: ${port}`)
-})
