@@ -8,7 +8,7 @@ const connectMongoDb = async () => {
          .connect(mongodbURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            dbName: "legalMate",
+            dbName: "legalmateDb",
          })
          .then(() => console.log("Database connection successful"))
          .catch((err) => console.log(err));

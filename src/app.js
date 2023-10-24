@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const createError = require("http-errors");
 const xssClean = require("xss-clean");
 const cors = require("cors");
+const lawyerRoute = require("./routers/lawyerRoute");
 const app = express();
 
 
@@ -21,6 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) =>
   res.status(200).send(`Hello. <br/> Legal Mate Database Running`)
 );
+
+app.use('/lawyer' , lawyerRoute)
 
 
 
