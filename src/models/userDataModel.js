@@ -6,11 +6,6 @@ const userDataModel = new Schema(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["approved", "pending", "rejected"],
-      default: "pending",
-    },
     name: {
       type: String,
       required: true,
@@ -25,6 +20,11 @@ const userDataModel = new Schema(
     joinDate: {
       type: Date,
       default: Date.now
+    },
+    status: {
+      type: String,
+      enum: ["approved", "pending", "rejected"],
+      default: "pending",
     }
   }
 );

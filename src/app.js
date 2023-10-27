@@ -7,6 +7,9 @@ const createError = require("http-errors");
 const xssClean = require("xss-clean");
 const cors = require("cors");
 const lawyerRoute = require("./routers/lawyerRoute");
+const userRoute = require("./routers/userRoute");
+const chatRoute = require("./routers/chatRoute");
+const messageRoute = require("./routers/messageRoute");
 const app = express();
 
 
@@ -23,7 +26,10 @@ app.get("/", (req, res) =>
   res.status(200).send(`Hello. <br/> Legal Mate Database Running`)
 );
 
-app.use('/lawyer' , lawyerRoute)
+app.use('/users',userRoute)
+app.use('/attorney' , lawyerRoute)
+app.use('/chat' , chatRoute)
+app.use('/message' , messageRoute)
 
 
 

@@ -1,4 +1,4 @@
-const { chatCollection, messageCollection } = require("../collections/collection");
+const { chatCollection } = require("../collection/collection");
 
 const createChat = async (req, res) => {
   const { receiver ,sender } = req.body;
@@ -25,6 +25,7 @@ const createChat = async (req, res) => {
 const findAllUsersChats = async (req, res) => {
   try {
     const chat = await chatCollection.find();
+    console.log(chat)
     res.status(200).json(chat);
   } catch (error) {
     res.status(500).json({ message: error.message });

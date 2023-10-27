@@ -1,11 +1,15 @@
 const express = require("express");
-const { addLawyer, getAllLawyer, getLawyer, deleteLawyer } = require("../controllers/lawyerController");
+const { addLawyer, getAllLawyer,getLawyerByEmail, getLawyer, deleteLawyer, addLawyers } = require("../controllers/lawyerController");
 
 const lawyerRoute = express.Router();
 
 lawyerRoute.post("/", addLawyer);
 
+lawyerRoute.post("/many/", addLawyers);
+
 lawyerRoute.get("/", getAllLawyer);
+
+lawyerRoute.get("/email/:email", getLawyerByEmail);
 
 lawyerRoute.get("/:id", getLawyer);
 

@@ -1,4 +1,4 @@
-const { messageCollection } = require("../collections/collection");
+const { messageCollection } = require("../collection/collection");
 
 const createMessage = async (req, res) => {
   const { chatId, senderId, text } = req.body;
