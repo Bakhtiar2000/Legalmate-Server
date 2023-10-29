@@ -4,6 +4,7 @@ const { practiceCollection } = require("../collection/collection");
 
 const addPracticeArea = async (req, res) => {
     const newData = req.body
+    console.log(newData)
     try {
         const result = await practiceCollection(newData).save()
         res.status(200).json(result);

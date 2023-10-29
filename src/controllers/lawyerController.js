@@ -62,12 +62,27 @@ const deleteLawyer = async (req, res) => {
 // Update candidate status
 const updateAttorneyLicense = async (req, res) => {
   const updateBody = req.body;
+  console.log(updateBody)
+  try {
+    const updateAttorneyData = await lawyerCollection.findOneAndUpdate(
+      { email: updateBody.email },
+      {
+        $set: {
+          license: updateBody.license
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updateAttorneyData);
+  } catch (error) {
+    res.status(400).send({ message: 'Server Error' });
+  }
 };
 
 
 const updateAttorneyProfile = async (req, res) => {
   const updateBody = req.body;
-console.log(updateBody)
+  console.log(updateBody)
   try {
     // Only Status Update
     if (updateBody.email) {
@@ -219,5 +234,6 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 };
 
 
-module.exports = { addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyProfile ,updateAttorneyEducation ,updateAttorneyExperience,updateAttorneyAwards ,updateAttorneyProfilePhoto
+module.exports = {
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto
 }
