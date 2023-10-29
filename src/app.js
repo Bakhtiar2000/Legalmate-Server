@@ -10,6 +10,8 @@ const lawyerRoute = require("./routers/lawyerRoute");
 const userRoute = require("./routers/userRoute");
 const chatRoute = require("./routers/chatRoute");
 const messageRoute = require("./routers/messageRoute");
+const paymentRoute = require("./routers/paymentRoute");
+const practiceAreaRoute = require("./routers/practiceAreaRoute");
 const app = express();
 
 
@@ -28,10 +30,12 @@ app.get("/", (req, res) =>
 
 app.use('/users',userRoute)
 app.use('/attorney' , lawyerRoute)
+app.use('/practiceArea' , practiceAreaRoute)
 app.use('/chat' , chatRoute)
 app.use('/message' , messageRoute)
 
-
+// payment
+app.use("/api/payment", paymentRoute);
 
 // server error handling -> all the errors
 app.use((err, req, res, next) => {

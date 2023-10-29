@@ -4,7 +4,7 @@ const { userCollection, lawyerCollection } = require("../collection/collection")
 const postUser = async (req, res) => {
     try {
         const newUserData = req.body;
-        // console.log()
+        console.log(newUserData)
         const query = { email: newUserData.email };
         const isExist = await userCollection.findOne(query);
 

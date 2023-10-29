@@ -11,7 +11,7 @@ const lawyerDataMOdel = new mongoose.Schema(
         location: String,
         hourly_rate: String,
         rating: String,
-        license: Array,
+        license: Object,
         experience: Array,
         education: Array,
         reviews: Array,
