@@ -35,7 +35,7 @@ app.use('/chat' , chatRoute)
 app.use('/message' , messageRoute)
 
 // payment
-app.use("/api/payment", paymentRoute);
+app.use("/payment", paymentRoute);
 
 // server error handling -> all the errors
 app.use((err, req, res, next) => {

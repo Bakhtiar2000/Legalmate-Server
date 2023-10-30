@@ -3,6 +3,9 @@ const express = require('express');
 const SSLCommerzPayment = require('sslcommerz-lts');
 const { paymentCollection } = require('../collection/collection');
 
+// const baseURL: 'http://localhost:5173/',
+// const baseURL: 'https://legalmate-server.vercel.app/',
+
 const store_id = 'hirew6501a99532e47'
 const store_passwd = 'hirew6501a99532e47@ssl'
 const is_live = false
@@ -10,17 +13,18 @@ const paymentRoute = express.Router();
 // const tran_id = new ObjectId().toString();
 
 paymentRoute.post('/', async (req, res) => {
-
+    // console.log(req.body)
     try {
         const payment = req.body;
+        console.log("payment", payment)
         const data = {
             total_amount: payment.amount,
-            currency: 'USD',
+            currency: 'BDT',
             tran_id: payment.tran_id,
-            success_url: `https://hire-wave.onrender.com/api/payment/success/${payment.tran_id}`,
-            fail_url: 'https://hire-wave.onrender.com/api/payment/fail',
-            cancel_url: 'https://hire-wave.onrender.com/api/payment/fail',
-            ipn_url: 'https://hire-wave.onrender.com/ipn',
+            success_url: `http://localhost:5000/payment/success/${payment.tran_id}`,
+            fail_url: 'http://localhost:5173',
+            cancel_url: 'http://localhost:5173',
+            ipn_url: 'http://localhost:5173/ipn',
             shipping_method: 'Courier',
             product_name: 'Computer.',
             product_category: 'Electronic',
@@ -43,24 +47,18 @@ paymentRoute.post('/', async (req, res) => {
             ship_postcode: 1000,
             ship_country: 'Bangladesh',
         };
-        // recruiterEmail: 
-        // recruiterId: 
-        // receiver: receiverImage:position: 
-        // amount:  tran_id: applicantEmail: recruiterName:  companyLogo:  paymentDate: isPaid: 
         const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
         sslcz.init(data).then(apiResponse => {
             // Redirect the user to payment gateway
             let GatewayPageURL = apiResponse.GatewayPageURL
             const paymentHistory = {
-                recruiterEmail: payment.recruiterEmail,
-                recruiterId: payment.recruiterId,
-                applicantEmail: payment.applicantEmail,
-                receiver: payment.receiver,
-                receiverImage: payment.receiverImage,
-                position: payment.position,
+                attorneyID: payment.attorneyID,
+                attorneyName: payment.attorneyName,
+                attorneyEmail: payment.attorneyEmail,
+                clintName: payment.clintName,
+                clintEmail: payment.clintEmail,
+                practiceArea: payment.practiceArea,
                 amount: payment.amount,
-                recruiterName: payment.recruiterName,
-                companyLogo: payment.companyLogo,
                 tran_id: payment.tran_id,
                 isPaid: false
             }
@@ -76,6 +74,7 @@ paymentRoute.post('/', async (req, res) => {
 
 paymentRoute.post('/success/:tran_id', async (req, res) => {
     const tran_id = req.params.tran_id;
+    console.log(tran_id)
     const updatePaymentData = await paymentCollection.findOneAndUpdate(
         {
             tran_id: tran_id,
@@ -86,8 +85,9 @@ paymentRoute.post('/success/:tran_id', async (req, res) => {
         { new: true }
 
     )
+    console.log("updatePaymentData", updatePaymentData.attorneyID)
     // res.redirect(`http://localhost:5173/dashboard/payment/successful/${tran_id}`)
-    res.redirect(`https://hire-wave.web.app/dashboard/payment/successful/${tran_id}`)
+    res.redirect(`http://localhost:5173/attorney_details/${updatePaymentData.attorneyID}`)
 })
 
 paymentRoute.post('/fail', async (req, res) => {
@@ -102,31 +102,33 @@ paymentRoute.get('/history', async (req, res) => {
     }
 })
 
-paymentRoute.get('/history/:recruiterName', async (req, res) => {
+paymentRoute.get('/history/:email', async (req, res) => {
+    console.log("abcd",req.params.email)
+    console.log("payment")
     try {
         const payment = await paymentCollection.find(
             {
-                recruiterName: req.params.recruiterName,
+                clintEmail: req.params.email,
                 isPaid: true
-            }).sort({ purchaseDate: -1 })
+            }).sort({ paymentDate: -1 })
         console.log(payment)
         res.status(200).send(payment)
     } catch (error) {
         res.status(400).send({ message: error.message })
     }
 })
-paymentRoute.get('/history/:candidateName', async (req, res) => {
-    try {
-        const payment = await paymentCollection.find(
-            {
-                applicantEmail: req.params.applicantEmail,
-                isPaid: true
-            }).sort({ purchaseDate: -1 })
-        console.log(payment)
-        res.status(200).send(payment)
-    } catch (error) {
-        res.status(400).send({ message: error.message })
-    }
-})
+// paymentRoute.get('/history/:clintEmail', async (req, res) => {
+//     try {
+//         const payment = await paymentCollection.find(
+//             {
+//                 clintEmail: req.params.clintEmail,
+//                 isPaid: true
+//             }).sort({ paymentDate: -1 })
+//         console.log(payment)
+//         res.status(200).send(payment)
+//     } catch (error) {
+//         res.status(400).send({ message: error.message })
+//     }
+// })
 
-module.exports = paymentRoute
+module.exports = paymentRoute;

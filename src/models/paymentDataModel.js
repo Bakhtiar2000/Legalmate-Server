@@ -4,6 +4,10 @@ const paymentDataModel = new mongoose.Schema({
 
 
 
+    attorneyID: {
+        type: String,
+        require: true,
+    },
     attorneyName: {
         type: String,
         require: true,
