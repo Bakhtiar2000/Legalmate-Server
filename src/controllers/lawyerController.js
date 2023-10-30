@@ -145,6 +145,23 @@ const updateAttorneyEducation = async (req, res) => {
   }
 };
 
+
+const updateAttorneyEducationDetails = async (req, res) => {
+  const { id, position } = req.body;
+  console.log("index number", id, position)
+  try {
+    const lawyer = await lawyerCollection.findById(id);
+    console.log(lawyer.education)
+    lawyer.education[0] = updatedEducationData;
+    await lawyer.save();
+    return res.status(200).json({ message: 'Education history removed successfully' });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
+
+
 const updateAttorneyExperience = async (req, res) => {
   const updateBody = req.body;
 
@@ -170,6 +187,22 @@ const updateAttorneyExperience = async (req, res) => {
     res.status(400).send({ message: 'Server Error' });
   }
 };
+
+const deleteAttorneyExperience = async (req, res) => {
+  const { id, position } = req.body;
+  console.log("index number", id, position)
+  try {
+    const lawyer = await lawyerCollection.findById(id);
+    console.log(lawyer.experience)
+    lawyer.experience.splice(position, 1);
+    await lawyer.save();
+    return res.status(200).json({ message: 'experience history removed successfully' });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
+
 
 const updateAttorneyAwards = async (req, res) => {
   const updateBody = req.body;
@@ -197,6 +230,21 @@ const updateAttorneyAwards = async (req, res) => {
   }
 };
 
+
+const deleteAttorneyAward = async (req, res) => {
+  const { id, position } = req.body;
+  // console.log("index number", id, position)
+  try {
+    const lawyer = await lawyerCollection.findById(id);
+    // console.log(lawyer.awards)
+    lawyer.awards.splice(position, 1);
+    await lawyer.save();
+    return res.status(200).json({ message: 'experience history removed successfully' });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
 
 // Update Attorney Profile
 const updateAttorneyProfilePhoto = async (req, res) => {
@@ -235,5 +283,5 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 
 
 module.exports = {
-  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward
 }
