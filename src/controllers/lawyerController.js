@@ -79,6 +79,31 @@ const updateAttorneyLicense = async (req, res) => {
   }
 };
 
+const updateAttorneyReviews = async (req, res) => {
+  const updateBody = req.body;
+
+  try {
+    // Only Status Update
+    if (updateBody.email) {
+
+      const updateAttorneyData = await lawyerCollection.findOneAndUpdate(
+        { email: updateBody.email },
+        {
+          $set: {
+            reviews: updateBody.newReview,
+          },
+        },
+        { new: true }
+      );
+
+      // send data client site
+      res.status(200).json(updateAttorneyData);
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
 
 const updateAttorneyProfile = async (req, res) => {
   const updateBody = req.body;
@@ -146,15 +171,15 @@ const updateAttorneyEducation = async (req, res) => {
 };
 
 
-const updateAttorneyEducationDetails = async (req, res) => {
+const deleteAttorneyEducation = async (req, res) => {
   const { id, position } = req.body;
   console.log("index number", id, position)
   try {
     const lawyer = await lawyerCollection.findById(id);
     console.log(lawyer.education)
-    lawyer.education[0] = updatedEducationData;
+    lawyer.education.splice(position, 1);
     await lawyer.save();
-    return res.status(200).json({ message: 'Education history removed successfully' });
+    return res.status(200).json({ message: 'education history removed successfully' });
   } catch (error) {
     console.log(error)
     res.status(400).send({ message: 'Server Error' });
@@ -283,5 +308,5 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 
 
 module.exports = {
-  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward
 }

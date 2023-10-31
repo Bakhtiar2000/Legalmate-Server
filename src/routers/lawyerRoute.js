@@ -1,5 +1,5 @@
 const express = require("express");
-const { addLawyer, getAllLawyer,getLawyerByEmail, getLawyer, deleteLawyer, addLawyers, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, updateAttorneyLicense, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward } = require("../controllers/lawyerController");
+const { addLawyer, getAllLawyer,getLawyerByEmail, getLawyer, deleteLawyer, addLawyers, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, updateAttorneyLicense, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward, updateAttorneyReviews } = require("../controllers/lawyerController");
 
 const lawyerRoute = express.Router();
 
@@ -19,11 +19,11 @@ lawyerRoute.patch("/basic", updateAttorneyProfile);
 
 lawyerRoute.patch("/license", updateAttorneyLicense);
 
+lawyerRoute.patch("/review", updateAttorneyReviews);
+
 lawyerRoute.patch("/education", updateAttorneyEducation);
 
 lawyerRoute.patch("/deleteEdu", deleteAttorneyEducation);
-
-// lawyerRoute.patch("/updateEdu", deleteAttorneyEducation);
 
 lawyerRoute.patch("/experience", updateAttorneyExperience);
 
