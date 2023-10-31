@@ -22,8 +22,8 @@ paymentRoute.post('/', async (req, res) => {
             currency: 'BDT',
             tran_id: payment.tran_id,
             success_url: `http://localhost:5000/payment/success/${payment.tran_id}`,
-            fail_url: 'http://localhost:5173',
-            cancel_url: 'http://localhost:5173',
+            fail_url: 'http://localhost:5000/payment/fail',
+            cancel_url: 'http://localhost:5000/payment/fail',
             ipn_url: 'http://localhost:5173/ipn',
             shipping_method: 'Courier',
             product_name: 'Computer.',
@@ -86,17 +86,16 @@ paymentRoute.post('/success/:tran_id', async (req, res) => {
 
     )
     console.log("updatePaymentData", updatePaymentData.attorneyID)
-    // res.redirect(`http://localhost:5173/dashboard/payment/successful/${tran_id}`)
     res.redirect(`http://localhost:5173/attorney_details/${updatePaymentData.attorneyID}`)
 })
 
 paymentRoute.post('/fail', async (req, res) => {
-    // res.redirect('http://localhost:5173/dashboard/payment/fail')
-    res.redirect('https://hire-wave.web.app/dashboard/payment/fail')
+    console.log("payment fail")
+    res.redirect('http://localhost:5173/')
 })
 paymentRoute.get('/history', async (req, res) => {
     try {
-        res.status(200).send(await paymentCollection.find().sort({ purchaseDate: -1 }))
+        res.status(200).send(await paymentCollection.find({isPaid: true }).sort({ purchaseDate: -1 }))
     } catch (error) {
         res.status(400).send({ message: error.message })
     }
@@ -117,18 +116,5 @@ paymentRoute.get('/history/:email', async (req, res) => {
         res.status(400).send({ message: error.message })
     }
 })
-// paymentRoute.get('/history/:clintEmail', async (req, res) => {
-//     try {
-//         const payment = await paymentCollection.find(
-//             {
-//                 clintEmail: req.params.clintEmail,
-//                 isPaid: true
-//             }).sort({ paymentDate: -1 })
-//         console.log(payment)
-//         res.status(200).send(payment)
-//     } catch (error) {
-//         res.status(400).send({ message: error.message })
-//     }
-// })
 
 module.exports = paymentRoute;
