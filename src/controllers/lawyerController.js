@@ -81,11 +81,11 @@ const updateAttorneyLicense = async (req, res) => {
 
 const updateAttorneyReviews = async (req, res) => {
   const updateBody = req.body;
-
+  // console.log(updateBody)
   try {
     // Only Status Update
     if (updateBody.email) {
-
+      // console.log(updateBody.newReview)
       const updateAttorneyData = await lawyerCollection.findOneAndUpdate(
         { email: updateBody.email },
         {
@@ -95,7 +95,7 @@ const updateAttorneyReviews = async (req, res) => {
         },
         { new: true }
       );
-
+      // console.log("updateAttorneyData",updateAttorneyData)
       // send data client site
       res.status(200).json(updateAttorneyData);
     }
