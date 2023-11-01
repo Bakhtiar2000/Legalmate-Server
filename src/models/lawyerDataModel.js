@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 
 const lawyerDataMOdel = new mongoose.Schema(
-   
+
     {
         name: String,
         img: String,
@@ -14,17 +14,15 @@ const lawyerDataMOdel = new mongoose.Schema(
         license: Object,
         experience: Array,
         education: Array,
+        documents: Array,
         reviews: Array,
         awards: Array,
         solverCase: Number,
         workArea: String,
-        facebook: String,
-        linkedin: String,
-        twitter: String,
         email: String,
-        runningSerial:Number,
-        consultationHours:String,
-        specializations:String,
+        runningSerial: Number,
+        consultationHours: String,
+        specializations: String,
     },
     {
         timestamps: true

@@ -59,7 +59,7 @@ const deleteLawyer = async (req, res) => {
 }
 
 
-// Update candidate status
+
 const updateAttorneyLicense = async (req, res) => {
   const updateBody = req.body;
   console.log(updateBody)
@@ -75,6 +75,41 @@ const updateAttorneyLicense = async (req, res) => {
     );
     res.status(200).json(updateAttorneyData);
   } catch (error) {
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
+
+const updateAttorneyDocument = async (req, res) => {
+  const updateBody = req.body;
+  console.log(updateBody.newDocuments)
+  try {
+    const updateAttorneyData = await lawyerCollection.findOneAndUpdate(
+      { email: updateBody.email },
+      {
+        $set: {
+          documents: updateBody.newDocuments
+        },
+      },
+      { new: true }
+    );
+    console.log(updateAttorneyData)
+    res.status(200).json(updateAttorneyData);
+  } catch (error) {
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
+
+const deleteAttorneyDocument = async (req, res) => {
+  const { id, position } = req.body;
+  console.log("index number", id, position)
+  try {
+    const lawyer = await lawyerCollection.findById(id);
+    console.log(lawyer.documents)
+    lawyer.documents.splice(position, 1);
+    await lawyer.save();
+    return res.status(200).json({ message: 'education history removed successfully' });
+  } catch (error) {
+    console.log(error)
     res.status(400).send({ message: 'Server Error' });
   }
 };
@@ -308,5 +343,5 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 
 
 module.exports = {
-  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward ,updateAttorneyDocument ,deleteAttorneyDocument
 }

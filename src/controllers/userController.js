@@ -1,4 +1,4 @@
-const { userCollection, lawyerCollection } = require("../collection/collection");
+const { userCollection, lawyerCollection, clientCollection } = require("../collection/collection");
 
 // Add A User On DataBase
 const postUser = async (req, res) => {
@@ -12,7 +12,7 @@ const postUser = async (req, res) => {
             return res.status(201).send({ message: "user exist" });
         } else {
             if (newUserData.role === "attorney") {
-                const newAttorney={
+                const newAttorney = {
                     name: newUserData.name,
                     img: newUserData.image,
                     about: "",
@@ -22,6 +22,7 @@ const postUser = async (req, res) => {
                     hourly_rate: "",
                     rating: "",
                     license: [],
+                    documents: [],
                     experience: [],
                     education: [],
                     reviews: [],
@@ -32,14 +33,22 @@ const postUser = async (req, res) => {
                     linkedin: "",
                     twitter: "",
                     email: newUserData.email,
-                    runningSerial:0,
-                    consultationHours:"",
-                    specializations:"",
+                    runningSerial: 0,
+                    consultationHours: "",
+                    specializations: "",
                 }
-                const insertNewAttorney=await lawyerCollection(newAttorney).save()
-                
+                const insertNewAttorney = await lawyerCollection(newAttorney).save()
+
             }
-            const insert = await userCollection(newUserData).save();
+            const newClient = {
+                name: newUserData.name,
+                img: newUserData.image,
+                occupation: "",
+                email: newUserData.email,
+                location: "",
+            }
+            const insertClient = await clientCollection(newClient).save();
+            const insertUser = await userCollection(newUserData).save();
             return res.status(200).json(insert)
         }
     } catch (error) {
