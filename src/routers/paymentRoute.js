@@ -3,7 +3,7 @@ const express = require('express');
 const SSLCommerzPayment = require('sslcommerz-lts');
 const { paymentCollection } = require('../collection/collection');
 
-// const baseURL: 'http://localhost:5173/',
+// const baseURL: 'https://roaring-lokum-6ac09a.netlify.app/',
 // const baseURL: 'https://legalmate-server.vercel.app/',
 
 const store_id = 'hirew6501a99532e47'
@@ -21,10 +21,10 @@ paymentRoute.post('/', async (req, res) => {
             total_amount: payment.amount,
             currency: 'BDT',
             tran_id: payment.tran_id,
-            success_url: `http://localhost:5000/payment/success/${payment.tran_id}`,
-            fail_url: 'http://localhost:5000/payment/fail',
-            cancel_url: 'http://localhost:5000/payment/fail',
-            ipn_url: 'http://localhost:5173/ipn',
+            success_url: `https://legalmate-server.vercel.app/payment/success/${payment.tran_id}`,
+            fail_url: 'https://legalmate-server.vercel.app/payment/fail',
+            cancel_url: 'https://legalmate-server.vercel.app/payment/fail',
+            ipn_url: 'https://legalmate-server.vercel.app/ipn',
             shipping_method: 'Courier',
             product_name: 'Computer.',
             product_category: 'Electronic',
@@ -52,14 +52,18 @@ paymentRoute.post('/', async (req, res) => {
             // Redirect the user to payment gateway
             let GatewayPageURL = apiResponse.GatewayPageURL
             const paymentHistory = {
-                attorneyID: payment.attorneyID,
-                attorneyName: payment.attorneyName,
-                attorneyEmail: payment.attorneyEmail,
-                clintName: payment.clintName,
-                clintEmail: payment.clintEmail,
-                practiceArea: payment.practiceArea,
-                amount: payment.amount,
+
+
+                sender_id: payment.sender_id,
+                sender_name: payment.sender_name,
+                sender_email: payment.sender_email,
+                sender_role: payment.sender_role ,
+                target_id: payment.target_id,
+                target_name: payment.target_name ,
+                target_email: payment.target_email ,
+                target_role: payment.target_role,
                 tran_id: payment.tran_id,
+                amount: payment.amount,
                 isPaid: false
             }
             console.log("paymentHistory", paymentHistory)
@@ -85,29 +89,29 @@ paymentRoute.post('/success/:tran_id', async (req, res) => {
         { new: true }
 
     )
-    console.log("updatePaymentData", updatePaymentData.attorneyID)
-    res.redirect(`http://localhost:5173/attorney_details/${updatePaymentData.attorneyID}`)
+    console.log("updatePaymentData", updatePaymentData.target_id)
+    res.redirect(`https://roaring-lokum-6ac09a.netlify.app/attorney_details/${updatePaymentData.target_id}`)
 })
 
 paymentRoute.post('/fail', async (req, res) => {
     console.log("payment fail")
-    res.redirect('http://localhost:5173/')
+    res.redirect('https://roaring-lokum-6ac09a.netlify.app/')
 })
 paymentRoute.get('/history', async (req, res) => {
     try {
-        res.status(200).send(await paymentCollection.find({isPaid: true }).sort({ purchaseDate: -1 }))
+        res.status(200).send(await paymentCollection.find({ isPaid: true }).sort({ paymentDate: -1 }))
     } catch (error) {
         res.status(400).send({ message: error.message })
     }
 })
 
 paymentRoute.get('/history/:email', async (req, res) => {
-    console.log("abcd",req.params.email)
+    console.log("abcd", req.params.email)
     console.log("payment")
     try {
         const payment = await paymentCollection.find(
             {
-                clintEmail: req.params.email,
+                sender_email: req.params.email,
                 isPaid: true
             }).sort({ paymentDate: -1 })
         console.log(payment)

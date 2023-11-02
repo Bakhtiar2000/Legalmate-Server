@@ -23,8 +23,8 @@ const userDataModel = new Schema(
     },
     status: {
       type: String,
-      enum: ["approved", "pending", "rejected"],
-      default: "pending",
+      enum: ["approved", "rejected"],
+      default: "approved",
     }
   }
 );

@@ -49,7 +49,7 @@ const postUser = async (req, res) => {
             }
             const insertClient = await clientCollection(newClient).save();
             const insertUser = await userCollection(newUserData).save();
-            return res.status(200).json(insert)
+            return res.status(200).json(insertUser)
         }
     } catch (error) {
         console.error(error);

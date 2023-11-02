@@ -9,6 +9,11 @@ const lawyerDataMOdel = new mongoose.Schema(
         practiceArea: String,
         contact: String,
         location: String,
+        status: {
+            type: String,
+            enum: ["approved", "pending", "rejected"],
+            default: "pending",
+        },
         hourly_rate: String,
         rating: String,
         license: Object,

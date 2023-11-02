@@ -8,6 +8,11 @@ const clientDataMOdel = new mongoose.Schema(
         location: String,
         occupation: String,
         email: String,
+        status: {
+            type: String,
+            enum: ["approved", "rejected"],
+            default: "approved",
+          },
     },
     {
         timestamps: true

@@ -12,6 +12,8 @@ const chatRoute = require("./routers/chatRoute");
 const messageRoute = require("./routers/messageRoute");
 const paymentRoute = require("./routers/paymentRoute");
 const practiceAreaRoute = require("./routers/practiceAreaRoute");
+const clientRoute = require("./routers/clientRoute");
+const caseRoute = require("./routers/caseRoute");
 const app = express();
 
 
@@ -30,6 +32,8 @@ app.get("/", (req, res) =>
 
 app.use('/users',userRoute)
 app.use('/attorney' , lawyerRoute)
+app.use('/client' , clientRoute)
+app.use('/case' , caseRoute)
 app.use('/practiceArea' , practiceAreaRoute)
 app.use('/chat' , chatRoute)
 app.use('/message' , messageRoute)

@@ -7,6 +7,7 @@ const userDataModel = require("../models/userDataModel");
 const paymentDataModel = require("../models/paymentDataModel");
 const practiceAreaDataModel = require("../models/practiceArea");
 const clientDataMOdel = require("../models/clientDataModel");
+const caseDataModel = require("../models/caseDataModel");
 
 const chatCollection = new mongoose.model("chats", chatModel);
 
@@ -18,10 +19,12 @@ const lawyerCollection = new mongoose.model("attorneys", lawyerDataMOdel);
 
 const clientCollection = new mongoose.model("client", clientDataMOdel);
 
+const caseCollection = new mongoose.model("case", caseDataModel);
+
 const practiceCollection = new mongoose.model("practiceArea", practiceAreaDataModel);
 
 const userCollection = new mongoose.model("user", userDataModel);
 
 const paymentCollection = new mongoose.model("payment", paymentDataModel);
 
-module.exports = { chatCollection, messageCollection, reviewCollection, lawyerCollection, practiceCollection, userCollection, paymentCollection,clientCollection }
+module.exports = { chatCollection, messageCollection, reviewCollection, lawyerCollection, practiceCollection, userCollection, paymentCollection,clientCollection ,caseCollection }

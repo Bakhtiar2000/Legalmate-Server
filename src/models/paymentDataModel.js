@@ -2,48 +2,16 @@ const mongoose = require("mongoose");
 
 const paymentDataModel = new mongoose.Schema({
 
-
-
-    attorneyID: {
-        type: String,
-        require: true,
-    },
-    attorneyName: {
-        type: String,
-        require: true,
-    },
-    attorneyEmail: {
-        type: String,
-        require: true,
-    },
-    clintName: {
-        type: String,
-        require: true,
-    },
-    clintId: {
-        type: String,
-        require: true,
-    },
-    clintEmail: {
-        type: String,
-        require: true,
-    },
-    caseFile: {
-        type: String,
-        require: true,
-    },
-    caseCategory: {
-        type: String,
-        require: true,
-    },
-    amount: {
-        type: Number,
-        require: true,
-    },
-    tran_id: {
-        type: String,
-        require: true,
-    },
+    sender_id: String,
+    sender_name: String,
+    sender_email: String,
+    sender_role: String,
+    target_id: String,
+    target_name: String,
+    target_email: String,
+    target_role: String,
+    tran_id: String,
+    amount: Number,
     paymentDate: {
         type: Date,
         default: Date.now

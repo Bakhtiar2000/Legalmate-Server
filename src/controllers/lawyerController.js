@@ -179,6 +179,42 @@ const updateAttorneyProfile = async (req, res) => {
   }
 };
 
+const updateAttorneyStatus = async (req, res) => {
+  const updateBody = req.body;
+  console.log(updateBody)
+  try {
+    // Only Status Update
+    if (updateBody.email) {
+      // only user collection status update
+      const updateUserData = await userCollection.findOneAndUpdate(
+        { email: updateBody.email },
+        {
+          $set: {
+            status: updateBody.status,
+          },
+        },
+        { new: true }
+      )
+      const updateAttorneyData = await lawyerCollection.findOneAndUpdate(
+        { email: updateBody.email },
+        {
+          $set: {
+            status: updateBody.status,
+          },
+        },
+        { new: true }
+      );
+
+      // send data client site
+      res.status(200).json(updateAttorneyData);
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: 'Server Error' });
+  }
+};
+
+
 const updateAttorneyEducation = async (req, res) => {
   const updateBody = req.body;
 
@@ -310,6 +346,7 @@ const deleteAttorneyAward = async (req, res) => {
 const updateAttorneyProfilePhoto = async (req, res) => {
   const attorneyId = req.params.id;
   const updateData = req.body;
+  console.log(updateData)
   try {
     // Use findByIdAndUpdate to update the document
     const updatedAttorney = await lawyerCollection.findByIdAndUpdate(
@@ -326,7 +363,7 @@ const updateAttorneyProfilePhoto = async (req, res) => {
       { email: updateData.email },
       {
         $set: {
-          img: updateData.url,
+          image: updateData.url,
         },
       },
       { new: true }
@@ -343,5 +380,5 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 
 
 module.exports = {
-  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward ,updateAttorneyDocument ,deleteAttorneyDocument
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward, updateAttorneyDocument, deleteAttorneyDocument ,updateAttorneyStatus
 }
