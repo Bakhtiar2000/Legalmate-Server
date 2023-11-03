@@ -37,9 +37,18 @@ const postUser = async (req, res) => {
                     consultationHours: "",
                     specializations: "",
                 }
+                const newUser = {
+                    role:newUserData.role,
+                    name: newUserData.name,
+                    image: newUserData.image,
+                    email: newUserData.email,
+                    status: "pending",
+                }
+                const insertUser = await userCollection(newUser).save();
                 const insertNewAttorney = await lawyerCollection(newAttorney).save()
 
             }
+
             const newClient = {
                 name: newUserData.name,
                 img: newUserData.image,
@@ -47,9 +56,20 @@ const postUser = async (req, res) => {
                 email: newUserData.email,
                 location: "",
             }
+
+            if (newUserData.role === "client") {
+                const newUser = {
+                    role:newUserData.role,
+                    name: newUserData.name,
+                    image: newUserData.image,
+                    email: newUserData.email,
+                    status: "approved",
+                }
+                const insertUser = await userCollection(newUser).save();
+            }
+
             const insertClient = await clientCollection(newClient).save();
-            const insertUser = await userCollection(newUserData).save();
-            return res.status(200).json(insertUser)
+            return res.status(200).json(insertClient)
         }
     } catch (error) {
         console.error(error);

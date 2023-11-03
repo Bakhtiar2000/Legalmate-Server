@@ -3,7 +3,6 @@ console.clear();
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const createError = require("http-errors");
 const xssClean = require("xss-clean");
 const cors = require("cors");
 const lawyerRoute = require("./routers/lawyerRoute");
@@ -14,6 +13,7 @@ const paymentRoute = require("./routers/paymentRoute");
 const practiceAreaRoute = require("./routers/practiceAreaRoute");
 const clientRoute = require("./routers/clientRoute");
 const caseRoute = require("./routers/caseRoute");
+const clientReviewRoute = require("./routers/clientReview");
 const app = express();
 
 
@@ -37,6 +37,8 @@ app.use('/case' , caseRoute)
 app.use('/practiceArea' , practiceAreaRoute)
 app.use('/chat' , chatRoute)
 app.use('/message' , messageRoute)
+
+app.use('/clientReview' , clientReviewRoute)
 
 // payment
 app.use("/payment", paymentRoute);
