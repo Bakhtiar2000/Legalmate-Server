@@ -7,6 +7,7 @@ const practiceAreaDataModel = new mongoose.Schema(
         img: String,
         attorneys: Number,
         contents: Array,
+        details: Array,
         
     },
     {

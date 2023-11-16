@@ -1,5 +1,5 @@
 const express = require("express");
-const { addPracticeArea, addPracticeAreas, getAllPracticeArea } = require("../controllers/practiceAreaDataController");
+const { addPracticeArea, addPracticeAreas, getAllPracticeArea, getPracticeAreaById } = require("../controllers/practiceAreaDataController");
 
 const practiceAreaRoute = express.Router();
 
@@ -9,6 +9,6 @@ practiceAreaRoute.post("/many", addPracticeAreas);
 
 practiceAreaRoute.get("/", getAllPracticeArea);
 
-// practiceAreaRoute.get("/:chatId", getMessages);
+practiceAreaRoute.get("/:id", getPracticeAreaById);
 
 module.exports = practiceAreaRoute;

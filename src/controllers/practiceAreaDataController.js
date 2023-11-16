@@ -29,35 +29,17 @@ const getAllPracticeArea = async (req, res) => {
         res.status(500).json(error);
     }
 }
-// const getPracticeArea = async (req, res) => {
-//     const id=req.params.id
-//     try {
-//         const result = await practiceCollection.findById(id);
-//         res.status(200).json(result);
-//     } catch (error) {
-//         res.status(500).json(error);
-//     }
-// }
-// const getPracticeAreaByEmail = async (req, res) => {
-//     const email=req.params.email
-//     try {
-//         const result = await practiceCollection.findOne({email:email});
-//         res.status(200).json(result);
-//     } catch (error) {
-//         res.status(500).json(error);
-//     }
-// }
-// const deletePracticeArea = async (req, res) => {
-//     const id=req.params.id
-//     try {
-//         const result = await practiceCollection.findByIdAndDelete(id);
-//         res.status(200).json(result);
-//     } catch (error) {
-//         res.status(500).json(error);
-//     }
-// }
+const getPracticeAreaById = async (req, res) => {
+    const id=req.params.id
+    try {
+        const result = await practiceCollection.findById(id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
 
-module.exports = { addPracticeArea,addPracticeAreas, getAllPracticeArea ,
-  // getPracticeArea,getPracticeAreaByEmail,deletePracticeArea
+
+module.exports = { addPracticeArea,addPracticeAreas, getAllPracticeArea ,getPracticeAreaById
 }

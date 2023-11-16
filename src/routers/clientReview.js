@@ -1,11 +1,14 @@
 const express = require("express");
 
-const { getAllClientReview, newClientReview } = require("../controllers/clientReviewController");
+const { getAllClientReview, newClientReview, updateClientReviewStatus } = require("../controllers/clientReviewController");
 const clientReviewRoute = express.Router();
 
 clientReviewRoute.post("/", newClientReview);
 
 clientReviewRoute.get("/", getAllClientReview);
+
+
+clientReviewRoute.patch("/updateStatus/:id", updateClientReviewStatus);
 
 // clientReviewRoute.get("/:chatId", getMessages);
 

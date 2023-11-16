@@ -14,6 +14,7 @@ const practiceAreaRoute = require("./routers/practiceAreaRoute");
 const clientRoute = require("./routers/clientRoute");
 const caseRoute = require("./routers/caseRoute");
 const clientReviewRoute = require("./routers/clientReview");
+const awarenessRoute = require("./routers/awarenessRoute");
 const app = express();
 
 
@@ -39,6 +40,8 @@ app.use('/chat' , chatRoute)
 app.use('/message' , messageRoute)
 
 app.use('/clientReview' , clientReviewRoute)
+
+app.use('/awareness' , awarenessRoute)
 
 // payment
 app.use("/payment", paymentRoute);

@@ -8,6 +8,7 @@ const paymentDataModel = require("../models/paymentDataModel");
 const practiceAreaDataModel = require("../models/practiceArea");
 const clientDataMOdel = require("../models/clientDataModel");
 const caseDataModel = require("../models/caseDataModel");
+const awarenessDataModel = require("../models/awarenessDataModel");
 
 const chatCollection = new mongoose.model("chats", chatModel);
 
@@ -29,4 +30,6 @@ const paymentCollection = new mongoose.model("payment", paymentDataModel);
 
 const ourReviewsCollection = new mongoose.model("ourReviews", reviewModel);
 
-module.exports = { chatCollection, messageCollection, lawyerCollection, practiceCollection, userCollection, paymentCollection,clientCollection ,caseCollection ,ourReviewsCollection}
+const awarenessCollection = new mongoose.model("awareness", awarenessDataModel);
+
+module.exports = { chatCollection, messageCollection, lawyerCollection, practiceCollection, userCollection, paymentCollection,clientCollection ,caseCollection ,ourReviewsCollection ,awarenessCollection}

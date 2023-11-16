@@ -6,6 +6,10 @@ const reviewModel = new mongoose.Schema(
         img: String,
         job: String,
         review: String,
+        status: {
+            type: String,
+            default: "pending"
+        }
     },
     {
         timestamps: true
