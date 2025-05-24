@@ -380,5 +380,5 @@ const updateAttorneyProfilePhoto = async (req, res) => {
 
 
 module.exports = {
-  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward, updateAttorneyDocument, deleteAttorneyDocument ,updateAttorneyStatus
+  addLawyer, addLawyers, getAllLawyer, getLawyer, getLawyerByEmail, deleteLawyer, updateAttorneyLicense, updateAttorneyReviews, updateAttorneyProfile, updateAttorneyEducation, updateAttorneyExperience, updateAttorneyAwards, updateAttorneyProfilePhoto, deleteAttorneyEducation, deleteAttorneyExperience, deleteAttorneyAward, updateAttorneyDocument, deleteAttorneyDocument, updateAttorneyStatus
 }

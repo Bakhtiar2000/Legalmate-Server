@@ -14,7 +14,7 @@ const practiceAreaRoute = require("./routers/practiceAreaRoute");
 const clientRoute = require("./routers/clientRoute");
 const caseRoute = require("./routers/caseRoute");
 const clientReviewRoute = require("./routers/clientReview");
-const awarenessRoute = require("./routers/awarenessRoute");
+const appointmentRoute = require("./routers/appointment");
 const app = express();
 
 
@@ -31,32 +31,28 @@ app.get("/", (req, res) =>
   res.status(200).send(`Hello. <br/> Legal Mate Database Running`)
 );
 
-app.use('/users',userRoute)
-app.use('/attorney' , lawyerRoute)
-app.use('/client' , clientRoute)
-app.use('/case' , caseRoute)
-app.use('/practiceArea' , practiceAreaRoute)
-app.use('/chat' , chatRoute)
-app.use('/message' , messageRoute)
-
-app.use('/clientReview' , clientReviewRoute)
-
-app.use('/awareness' , awarenessRoute)
-
-// payment
+app.use('/users', userRoute)
+app.use('/attorney', lawyerRoute)
+app.use('/client', clientRoute)
+app.use('/case', caseRoute)
+app.use('/practiceArea', practiceAreaRoute)
+app.use('/chat', chatRoute)
+app.use('/message', messageRoute)
+app.use('/clientReview', clientReviewRoute)
 app.use("/payment", paymentRoute);
+app.use("/appointment", appointmentRoute);
 
 // server error handling -> all the errors
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(400).send(err);
-  
-    return res.status(err.status || 500).json({
-      success: false,
-      message: err.message,
-      error: err,
-    });
+  console.log(err);
+  res.status(400).send(err);
+
+  return res.status(err.status || 500).json({
+    success: false,
+    message: err.message,
+    error: err,
   });
+});
 
 
 module.exports = app;
